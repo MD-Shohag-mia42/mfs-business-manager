@@ -9,12 +9,13 @@ import { renderMorePage } from './pages/more.js';
 import { renderSettingsPage } from './pages/settings.js';
 import { renderSimsPage } from './pages/sims.js';
 import { renderReceivePage } from './pages/receive.js';
+import { renderSendPage } from './pages/send.js';
 import { placeholderPage } from './pages/placeholder.js';
 
 const routes = {
   dashboard: { title: 'Dashboard',           render: renderDashboardPage },
   receive:   { title: 'Received Money',      render: renderReceivePage },
-  send:      { title: 'Send Money',          render: placeholderPage('Send Money', 6) },
+  send:      { title: 'Send Money',          render: renderSendPage },
   history:   { title: 'Transaction History', render: placeholderPage('Transaction History', 8) },
   reports:   { title: 'Reports',             render: placeholderPage('Reports', 9) },
   sims:      { title: 'SIM Management',      render: renderSimsPage },
