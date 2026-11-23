@@ -102,7 +102,7 @@ export async function renderSendPage(view) {
       </div>
 
       <div class="field">
-        <label for="s-receiver">Receiver-এর নম্বর</label>
+        <label for="s-receiver">Receiver-এর নম্বর <span class="muted">(ঐচ্ছিক)</span></label>
         <input id="s-receiver" name="receiver" type="tel" inputmode="numeric"
                list="s-recent" autocomplete="off" placeholder="01XXXXXXXXX">
         <datalist id="s-recent">
@@ -253,8 +253,15 @@ export async function renderSendPage(view) {
     const sim = sims.find((s) => s.id === f.sim.value);
     if (!sim) errors.push('SIM বেছে নিন।');
 
-    const receiver = normalizeBdMobile(f.receiver.value);
-    if (!receiver) errors.push('Receiver-এর সঠিক মোবাইল নম্বর দিন (যেমন 01712345678)।');
+    // Receiver is optional: empty is fine, but a number that is typed must be valid
+    let receiver = null;
+    const receiverRaw = f.receiver.value.trim();
+    if (receiverRaw) {
+      receiver = normalizeBdMobile(receiverRaw);
+      if (!receiver) {
+        errors.push('Receiver-এর নম্বর ঠিক নেই। নম্বর না জানা থাকলে ঘরটা খালি রাখুন।');
+      }
+    }
 
     const amount = parseAmount(f.amount.value);
     if (amount == null || amount <= 0) errors.push('সঠিক Amount দিন (যেমন 1500 বা 1500.50)।');
@@ -353,9 +360,9 @@ export async function renderSendPage(view) {
       lastEl.hidden = false;
       lastEl.innerHTML = `
         <p class="text-success"><strong>✓ সংরক্ষিত</strong></p>
-        <p>${escapeHtml(formatTaka(row.amount))} → ${escapeHtml(row.receiver_number)}</p>`;
+        <p>${escapeHtml(formatTaka(row.amount))}${row.receiver_number ? ` → ${escapeHtml(row.receiver_number)}` : ''}</p>`;
 
-      if (!recent.includes(row.receiver_number)) {
+      if (row.receiver_number && !recent.includes(row.receiver_number)) {
         recent = [row.receiver_number, ...recent].slice(0, 8);
         recentList.innerHTML = recent.map((n) => `<option value="${escapeHtml(n)}"></option>`).join('');
       }
@@ -373,4 +380,4 @@ export async function renderSendPage(view) {
   });
 
   await loadLimitStatus();
-        }
+            }
