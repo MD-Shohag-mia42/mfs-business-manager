@@ -9,10 +9,9 @@ export async function getSimUsage(simId) {
   return data ?? [];
 }
 
-// Every active count/amount limit of the SIM together with how much is used so far.
-export async function getLimitStatus(simId) {
-  const [limits, usage] = await Promise.all([listLimits(simId), getSimUsage(simId)]);
-
+// limits: sim_limits rows of ONE sim, usage: usage rows of the same sim.
+// Returns every active count/amount limit with how much is used so far.
+export function computeLimitStatus(limits, usage) {
   return limits
     .filter((l) => l.is_active && l.limit_type !== 'balance')
     .map((limit) => {
@@ -23,6 +22,11 @@ export async function getLimitStatus(simId) {
       const total = rows.reduce((sum, u) => sum + Number(u.tx_total), 0);
       return { limit, used: limit.limit_type === 'count' ? count : total };
     });
+}
+
+export async function getLimitStatus(simId) {
+  const [limits, usage] = await Promise.all([listLimits(simId), getSimUsage(simId)]);
+  return computeLimitStatus(limits, usage);
 }
 
 export function describeLimit(limit, typeLabel = (c) => c) {
