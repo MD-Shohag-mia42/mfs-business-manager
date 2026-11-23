@@ -232,3 +232,54 @@ textarea { min-height: 120px; resize: vertical; }
 
 /* toast must stay above sheets */
 #toast-root { z-index: 300; }
+
+
+/* ---------- Received Money ---------- */
+.btn-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn-row .btn { flex: 1; min-width: 150px; }
+.section-title { margin: 4px 0 12px; }
+
+.draft-list { display: grid; gap: 16px; }
+.draft > * + * { margin-top: 12px; }
+.draft.is-off { opacity: 0.65; }
+.draft.has-error { border-color: var(--danger); }
+.draft-dup { border-style: dashed; }
+.draft-head { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+.draft-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.draft-actions { display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; }
+
+.check { display: flex; align-items: center; gap: 10px; font-weight: 600; cursor: pointer; }
+.check input { width: 22px; height: 22px; min-height: 0; padding: 0; }
+
+.draft-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .draft-grid { grid-template-columns: 1fr 1fr; } }
+.draft-grid .field + .field { margin-top: 0; }
+.draft-more > .draft-grid { margin-top: 12px; }
+
+details > summary { cursor: pointer; color: var(--text-muted); font-size: 0.9rem; padding: 4px 0; }
+.draft-sms pre {
+  margin: 8px 0 0; padding: 10px;
+  white-space: pre-wrap; word-break: break-word;
+  font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 0.85rem;
+  background: var(--surface-2); border-radius: var(--radius-sm);
+}
+
+input.is-missing-required { border-color: var(--danger); background: var(--danger-bg); }
+input.is-missing { border-color: var(--warning); background: var(--warning-bg); }
+.field-hint { font-size: 0.82rem; }
+.text-warning { color: var(--warning); }
+.badge-warn { background: var(--warning-bg); color: var(--warning); }
+.form-warn {
+  color: var(--warning); background: var(--warning-bg);
+  padding: 10px 12px; border-radius: var(--radius-sm); font-size: 0.9rem;
+}
+
+.sticky-actions {
+  position: sticky;
+  bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 12px);
+  z-index: 25;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  margin-top: 16px;
+  box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.12);
+}
+@media (min-width: 860px) { .sticky-actions { bottom: 12px; } }
