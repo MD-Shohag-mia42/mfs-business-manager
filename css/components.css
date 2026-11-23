@@ -283,3 +283,17 @@ input.is-missing { border-color: var(--warning); background: var(--warning-bg); 
   box-shadow: 0 -4px 16px rgba(15, 23, 42, 0.12);
 }
 @media (min-width: 860px) { .sticky-actions { bottom: 12px; } }
+
+
+/* ---------- Send Money ---------- */
+.form-grid { display: grid; gap: 14px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+.form-grid .field + .field { margin-top: 0; }
+.draft-more > .form-grid { margin-top: 12px; }
+
+.limit-item > * + * { margin-top: 6px; }
+.limit-item-head { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.meter { height: 8px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.meter > span { display: block; height: 100%; background: var(--success); border-radius: 999px; }
+.meter.warn > span { background: var(--warning); }
+.meter.over > span { background: var(--danger); }
