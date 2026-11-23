@@ -1,3 +1,4 @@
+import { renderSimsPage } from './pages/sims.js';
 import { isConfigured } from './supabaseClient.js';
 import { getSession, onAuthChange } from './services/auth.js';
 import { initTheme } from './utils/theme.js';
