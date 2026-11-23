@@ -1,4 +1,3 @@
-import { renderSimsPage } from './pages/sims.js';
 import { isConfigured } from './supabaseClient.js';
 import { getSession, onAuthChange } from './services/auth.js';
 import { initTheme } from './utils/theme.js';
@@ -8,6 +7,7 @@ import { renderLoginPage } from './pages/login.js';
 import { renderDashboardPage } from './pages/dashboard.js';
 import { renderMorePage } from './pages/more.js';
 import { renderSettingsPage } from './pages/settings.js';
+import { renderSimsPage } from './pages/sims.js';
 import { placeholderPage } from './pages/placeholder.js';
 
 const routes = {
@@ -16,7 +16,7 @@ const routes = {
   send:      { title: 'Send Money',          render: placeholderPage('Send Money', 6) },
   history:   { title: 'Transaction History', render: placeholderPage('Transaction History', 8) },
   reports:   { title: 'Reports',             render: placeholderPage('Reports', 9) },
-  sims:      { title: 'SIM Management',      render: placeholderPage('SIM Management', 4) },
+  sims:      { title: 'SIM Management',      render: renderSimsPage },
   settings:  { title: 'Settings',            render: renderSettingsPage },
   more:      { title: 'More',                render: renderMorePage },
 };
