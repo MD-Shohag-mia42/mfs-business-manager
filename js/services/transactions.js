@@ -13,7 +13,7 @@ export async function findExistingTrxIds(service, trxIds) {
   return new Set(data.map((r) => r.trx_id));
 }
 
-// Soft duplicate check when the SMS has no TrxID:
+// Soft duplicate check when there is no TrxID:
 // same SIM + same amount + almost the same time.
 export async function findPossibleDuplicate({ simId, amount, isoFrom, isoTo }) {
   const { data, error } = await supabase
@@ -27,6 +27,12 @@ export async function findPossibleDuplicate({ simId, amount, isoFrom, isoTo }) {
     .limit(1);
   if (error) throw error;
   return data.length > 0;
+}
+
+export async function insertTransaction(row) {
+  const { data, error } = await supabase.from('transactions').insert(row).select().single();
+  if (error) throw error;
+  return data;
 }
 
 // Saves all rows in one go. If that fails, saves one by one so valid rows
@@ -45,6 +51,29 @@ export async function insertTransactions(rows) {
     else saved++;
   }
   return { saved, failed };
+}
+
+// Latest distinct receiver numbers used for Send Money (for suggestions).
+export async function listRecentReceivers(max = 8) {
+  const { data, error } = await supabase
+    .from('transactions')
+    .select('receiver_number, transaction_datetime')
+    .eq('transaction_type', 'send_money')
+    .eq('status', 'active')
+    .not('receiver_number', 'is', null)
+    .order('transaction_datetime', { ascending: false })
+    .limit(80);
+  if (error) throw error;
+
+  const seen = new Set();
+  const out = [];
+  for (const r of data) {
+    if (seen.has(r.receiver_number)) continue;
+    seen.add(r.receiver_number);
+    out.push(r.receiver_number);
+    if (out.length >= max) break;
+  }
+  return out;
 }
 
 export async function saveUnparsedSms(rawSms) {
