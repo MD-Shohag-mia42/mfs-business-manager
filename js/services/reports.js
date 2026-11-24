@@ -20,3 +20,17 @@ export async function listActiveLimits() {
   if (error) throw error;
   return data ?? [];
 }
+
+/* ---------- Reports page ---------- */
+
+// f: { fromIso, toIso, simId, service }
+const filterArgs = (f) => ({
+  p_from: f.fromIso || null,
+  p_to: f.toIso || null,
+  p_sim_id: f.simId || null,
+  p_service: f.service || null,
+});
+
+export const getReportBySim = (f) => rpc('report_by_sim', filterArgs(f));
+export const getReportByPeriod = (f, group = 'day') => rpc('report_by_period', { ...filterArgs(f), p_group: group });
+export const getReportTopNumbers = (f, limit = 10) => rpc('report_top_numbers', { ...filterArgs(f), p_limit: limit });
