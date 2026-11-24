@@ -57,3 +57,16 @@ export const monthLabel = (dateStr) => MONTHS_SHORT[Number(dateStr.slice(5, 7)) 
 export function monthCaption(dateStr) {
   return `${MONTHS[Number(dateStr.slice(5, 7)) - 1]} ${dateStr.slice(0, 4)}`;
 }
+
+// "2026-11-23" -> "2026-11-01"
+export const monthStartOf = (dateStr) => `${dateStr.slice(0, 7)}-01`;
+
+// Whole previous month (Dhaka): { from: "2026-10-01", to: "2026-10-31" }
+export function prevMonthRange() {
+  const start = monthStartOf(dhakaToday());
+  const end = addDays(start, -1);
+  return { from: monthStartOf(end), to: end };
+}
+
+// ISO timestamp from the database -> "YYYY-MM-DDTHH:mm" in Dhaka time
+export const toDhakaLocal = (iso) => nowDhakaLocal(new Date(iso));
