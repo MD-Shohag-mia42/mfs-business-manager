@@ -11,14 +11,14 @@ import { renderSimsPage } from './pages/sims.js';
 import { renderReceivePage } from './pages/receive.js';
 import { renderSendPage } from './pages/send.js';
 import { renderHistoryPage } from './pages/history.js';
-import { placeholderPage } from './pages/placeholder.js';
+import { renderReportsPage } from './pages/reports.js';
 
 const routes = {
   dashboard: { title: 'Dashboard',           render: renderDashboardPage },
   receive:   { title: 'Received Money',      render: renderReceivePage },
   send:      { title: 'Send Money',          render: renderSendPage },
   history:   { title: 'Transaction History', render: renderHistoryPage },
-  reports:   { title: 'Reports',             render: placeholderPage('Reports', 9) },
+  reports:   { title: 'Reports',             render: renderReportsPage },
   sims:      { title: 'SIM Management',      render: renderSimsPage },
   settings:  { title: 'Settings',            render: renderSettingsPage },
   more:      { title: 'More',                render: renderMorePage },
