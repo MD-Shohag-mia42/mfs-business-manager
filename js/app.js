@@ -3,6 +3,7 @@ import { getSession, onAuthChange } from './services/auth.js';
 import { initTheme } from './utils/theme.js';
 import { escapeHtml } from './utils/format.js';
 import { renderShell, setActiveNav, setPageTitle } from './components/nav.js';
+import { watchSimSelects } from './components/simPicker.js';
 import { renderLoginPage } from './pages/login.js';
 import { renderDashboardPage } from './pages/dashboard.js';
 import { renderMorePage } from './pages/more.js';
@@ -88,6 +89,7 @@ function showConfigError() {
 
 async function boot() {
   initTheme();
+  watchSimSelects(appEl);
   if (!isConfigured) return showConfigError();
 
   try {
