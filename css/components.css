@@ -384,3 +384,41 @@ table.data tfoot td { font-weight: 700; border-bottom: 0; border-top: 2px solid 
 .top-list li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 10px 0; border-top: 1px solid var(--border); }
 .top-list li:first-child { border-top: 0; padding-top: 0; }
 
+/* ---------- SIM picker ---------- */
+.sim-pick,
+.sim-option {
+  --accent: var(--primary);
+  display: flex; align-items: center; gap: 12px;
+  width: 100%; padding: 12px 14px;
+  text-align: left; color: inherit; cursor: pointer;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--accent);
+  border-radius: var(--radius-sm);
+}
+.sim-pick[data-service="bkash"], .sim-option[data-service="bkash"] { --accent: var(--bkash); }
+.sim-pick[data-service="nagad"], .sim-option[data-service="nagad"] { --accent: var(--nagad); }
+
+.sim-pick { min-height: 56px; }
+.sim-pick.is-placeholder { color: var(--text-muted); border-left-color: var(--border); }
+.sim-pick .chev { flex-shrink: 0; width: 18px; height: 18px; color: var(--text-muted); }
+
+.sim-pick-main,
+.sim-option-main { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.sim-pick-main strong,
+.sim-option-main strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sim-pick-main span,
+.sim-option-main span { font-size: 0.88rem; color: var(--text-muted); }
+
+.sim-options { display: grid; gap: 10px; }
+.sim-option { min-height: 64px; }
+.sim-option:hover { background: var(--surface-2); }
+.sim-option.is-selected { background: var(--primary-soft); border-color: var(--primary); border-left-color: var(--accent); }
+
+.sim-check {
+  display: grid; place-items: center; flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 50%;
+  border: 2px solid var(--border); color: transparent;
+  font-size: 0.9rem; font-weight: 700;
+}
+.sim-option.is-selected .sim-check { background: var(--primary); border-color: var(--primary); color: #fff; }
